@@ -13,6 +13,7 @@ export class PageRegister {
         this.emailInput = page.getByTestId('email');
         this.passwordInput = page.getByTestId('password');
         this.registerButton = page.getByTestId('register-submit');
+        this.registerErrorAlert = page.getByTestId('register-error');
     }
 
     async registerUser(userObj) {
@@ -23,12 +24,12 @@ export class PageRegister {
         await this.postalCode.fill(userObj.postalCode);
         await this.cityInput.fill(userObj.city);
         await this.stateInput.fill(userObj.state);
-        await this.countrySelect.click();
+        await this.countrySelect.click();         // click first to trigger event handling
         await this.countrySelect.selectOption(userObj.country);
         await this.phoneNumberInput.fill(userObj.phoneNumber);
-        await this.passwordInput.fill(userObj.password);
         await this.emailInput.fill(userObj.email);
-
+        await this.passwordInput.fill(userObj.password);
+    
         await this.registerButton.click();
     }
 }

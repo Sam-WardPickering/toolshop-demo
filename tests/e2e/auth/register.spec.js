@@ -15,6 +15,6 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(validUserObj, email);
 
-        await page.pause();
+        await expect(page).toHaveURL(/login/);
     }); 
 });

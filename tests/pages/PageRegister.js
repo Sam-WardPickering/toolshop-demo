@@ -17,13 +17,14 @@ export class PageRegister {
 
     async registerUser(userObj, userEmail) {
         await this.firstNameInput.fill(userObj.firstName);
-        await this.firstNameInput.fill(userObj.lastName);
+        await this.lastNameInput.fill(userObj.lastName);
         await this.dobInput.fill(userObj.dob);
         await this.streetInput.fill(userObj.street);
         await this.postalCode.fill(userObj.postalCode);
         await this.cityInput.fill(userObj.city);
         await this.stateInput.fill(userObj.state);
-        await this.countryInput.fill(userObj.country);
+        await this.countryInput.click();
+        await this.countryInput.selectOption(userObj.country);
         await this.phoneNumberInput.fill(userObj.phoneNumber);
         await this.passwordInput.fill(userObj.password);
         await this.emailInput.fill(userEmail);

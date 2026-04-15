@@ -10,6 +10,6 @@ export const users = {
        country: 'New Zealand',
        phoneNumber: '0226350956',
        email: 'samuel.wardpickering@gmail.com',
-       password: 'Password123!'
+       password: 'Password123456789!@'
     }
 }

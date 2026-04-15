@@ -28,7 +28,7 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(userObj);
 
-        await page.pause();
+        await expect(pageRegister.registerErrorAlert).toContainText('Customer must be 18 years old.');
     });
     test('customer registration accepted when age value = 18', async ({ page }) => {
         

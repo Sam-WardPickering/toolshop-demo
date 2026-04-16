@@ -5,11 +5,12 @@ import { users } from '../../test-data/users.js';
 import { generateDOB } from '../../helpers/date.js';
 
 test.describe('Registration', () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/auth/register');
+    });
     test('new customer registration (happy path)', async ({ page }) => {
         const email = generateValidEmail();
         const validUserObj = { ...users.sam, email };
-
-        await page.goto('/auth/register');
 
         const pageRegister = new PageRegister(page);
 
@@ -22,8 +23,6 @@ test.describe('Registration', () => {
 
         const userObj = { ...users.sam, email, dob: generateDOB(17) } 
 
-        await page.goto('/auth/register');
-
         const pageRegister = new PageRegister(page);
 
         await pageRegister.registerUser(userObj);
@@ -35,8 +34,6 @@ test.describe('Registration', () => {
 
         const userObj = { ...users.sam, email, dob: generateDOB(18) } 
 
-        await page.goto('/auth/register');
-
         const pageRegister = new PageRegister(page);
 
         await pageRegister.registerUser(userObj);
@@ -47,8 +44,6 @@ test.describe('Registration', () => {
         const email = generateValidEmail();
 
         const userObj = { ...users.sam, email, dob: generateDOB(75) } 
-
-        await page.goto('/auth/register');
 
         const pageRegister = new PageRegister(page);
 
@@ -62,8 +57,6 @@ test.describe('Registration', () => {
         const email = generateValidEmail();
 
         const userObj = { ...users.sam, email, dob: generateDOB(76) } 
-
-        await page.goto('/auth/register');
 
         const pageRegister = new PageRegister(page);
 

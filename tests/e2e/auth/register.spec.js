@@ -64,4 +64,14 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be younger than 75 years old.');
     });
+    test.only('customer registration rejected when email is invalid', async ({ page }) => {
+        const userObj = { ...users.sam, email: 'incorrectemail' } 
+
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.emailErrorAlert).toContainText('Email format is invalid');
+
+    })
 });

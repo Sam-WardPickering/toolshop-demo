@@ -14,6 +14,7 @@ export class PageRegister {
         this.passwordInput = page.getByTestId('password');
         this.registerButton = page.getByTestId('register-submit');
         this.registerErrorAlert = page.getByTestId('register-error');
+        this.emailErrorAlert = page.getByTestId('email-error');
     }
 
     async registerUser(userObj) {

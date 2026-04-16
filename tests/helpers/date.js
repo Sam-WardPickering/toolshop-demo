@@ -1,8 +1,7 @@
 export function generateDOB(age) {
-    let currentDate = new Date().toISOString().split('T')[0];
-    let [currYear, currMonth, currDay] = currentDate.split('-');
-    let invalidYear = Number(currYear) - age;
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - age);
+    date.setDate(date.getDate() - 1);
 
-    let updatedString = `${invalidYear.valueOf()}-${currMonth}-${currDay}`;
-    return updatedString;
+    return date.toISOString().split('T')[0];
 }

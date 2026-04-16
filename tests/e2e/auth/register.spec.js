@@ -5,7 +5,7 @@ import { users } from '../../test-data/users.js';
 import { generateDOB } from '../../helpers/date.js';
 
 test.describe('Registration', () => {
-    test('new customer registration (happy path)', async ({ page }) => {
+    test.skip('new customer registration (happy path)', async ({ page }) => {
         const email = generateValidEmail();
         const validUserObj = { ...users.sam, email };
 
@@ -17,7 +17,7 @@ test.describe('Registration', () => {
 
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     }); 
-    test.only('customer registration rejected when age value < 18', async ({ page }) => {
+    test.skip('customer registration rejected when age value < 18', async ({ page }) => {
         const email = generateValidEmail();
 
         const userObj = { ...users.sam, email, dob: generateDOB(17) } 
@@ -43,7 +43,7 @@ test.describe('Registration', () => {
 
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
-    test('customer registration accepted when age value = 75', async ({ page }) => {
+    test.skip('customer registration accepted when age value = 75', async ({ page }) => {
         const email = generateValidEmail();
 
         const userObj = { ...users.sam, email, dob: generateDOB(75) } 

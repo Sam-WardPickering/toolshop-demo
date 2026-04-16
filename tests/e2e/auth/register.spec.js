@@ -20,7 +20,7 @@ test.describe('Registration', () => {
     test.only('customer registration rejected when age value < 18', async ({ page }) => {
         const email = generateValidEmail();
 
-        const userObj = { ...users.sam, email, dob: generateDOB(17) } // TODO - dynamic date generation
+        const userObj = { ...users.sam, email, dob: generateDOB(17) } 
 
         await page.goto('/auth/register');
 
@@ -31,12 +31,42 @@ test.describe('Registration', () => {
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be 18 years old.');
     });
     test('customer registration accepted when age value = 18', async ({ page }) => {
-        
+        const email = generateValidEmail();
+
+        const userObj = { ...users.sam, email, dob: generateDOB(18) } 
+
+        await page.goto('/auth/register');
+
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
     test('customer registration accepted when age value = 75', async ({ page }) => {
-        
+        const email = generateValidEmail();
+
+        const userObj = { ...users.sam, email, dob: generateDOB(75) } 
+
+        await page.goto('/auth/register');
+
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
     test('customer registration rejected when age value > 75', async ({ page }) => {
+        const email = generateValidEmail();
 
+        const userObj = { ...users.sam, email, dob: generateDOB(76) } 
+
+        await page.goto('/auth/register');
+
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.registerErrorAlert).toContainText('Customer must be younger than 75 years old.');
     });
 });

@@ -73,13 +73,13 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.emailErrorAlert).toContainText('Email format is invalid');
     });
-    test('customer registration rejected when email already exists', async ({ page }) => {
-        // const userObj = { ...users.sam, email: 'incorrectemail' } 
+    test.only('customer registration rejected when email already exists', async ({ page }) => {
+        const userObj = { ...users.sam, email: users.admin.email } 
 
-        // const pageRegister = new PageRegister(page);
+        const pageRegister = new PageRegister(page);
 
-        // await pageRegister.registerUser(userObj);
+        await pageRegister.registerUser(userObj);
 
-        // await expect(pageRegister.registerErrorAlert).toContainText('A customer with this email address already exists.');
+        await expect(pageRegister.registerErrorAlert).toContainText('A customer with this email address already exists.');
     });
 });

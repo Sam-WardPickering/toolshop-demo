@@ -6,6 +6,7 @@ export class PageRegister {
         this.dobInput = page.getByTestId('dob');
         this.streetInput = page.getByTestId('street');
         this.postalCode = page.getByTestId('postal_code');
+        this.houseNumber = page.getByTestId('house_number');
         this.cityInput = page.getByTestId('city');
         this.stateInput = page.getByTestId('state');
         this.countrySelect = page.getByTestId('country');
@@ -23,6 +24,7 @@ export class PageRegister {
         await this.dobInput.fill(userObj.dob);
         await this.streetInput.fill(userObj.street);
         await this.postalCode.fill(userObj.postalCode);
+        await this.houseNumber.fill(userObj.houseNumber);
         await this.cityInput.fill(userObj.city);
         await this.stateInput.fill(userObj.state);
         await this.countrySelect.click();         // click first to trigger event handling

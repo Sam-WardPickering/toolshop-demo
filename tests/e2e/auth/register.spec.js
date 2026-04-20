@@ -71,7 +71,7 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(userObj);
 
-        await expect(pageRegister.emailErrorAlert).toContainText('Email format is invalid');
+        await expect(pageRegister.emailInputError).toContainText('Email format is invalid');
     });
     test('customer registration rejected when email already exists', async ({ page }) => {
         const userObj = { ...users.sam, email: users.admin.email } 

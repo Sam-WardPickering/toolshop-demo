@@ -82,4 +82,11 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.registerErrorAlert).toContainText('A customer with this email address already exists.');
     });
+    test.only('required fields display error messages when submitted without values', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerButton.click();
+
+        await expect(pageRegister.firstNameInputError).toContainText('First name is required');
+    })
 });

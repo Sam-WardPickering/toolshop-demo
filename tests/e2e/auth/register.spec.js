@@ -110,6 +110,23 @@ test.describe('Registration', () => {
         await expect(pageRegister.phoneNumberInputError).toContainText('Phone is required.');
         await expect(pageRegister.emailInputError).toContainText('Email is required');
         await expect(pageRegister.passwordInputError).toContainText('Password is required');
+    });
+    test('registration rejected when field values exceed max length', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
 
+        await pageRegister.registerButton.click();
+
+        await expect(pageRegister.firstNameInputError).toContainText('First name is required');
+        await expect(pageRegister.lastNameInputError).toContainText('Last name is required');
+        await expect(pageRegister.dobInputError).toContainText('Date of Birth is required');
+        await expect(pageRegister.streetInputError).toContainText('Street is required');
+        await expect(pageRegister.postalCodeError).toContainText('Postcode is required');
+        await expect(pageRegister.houseNumberError).toContainText('House number is required');
+        await expect(pageRegister.cityInputError).toContainText('City is required');
+        await expect(pageRegister.stateInputError).toContainText('State is required');
+        await expect(pageRegister.countrySelectError).toContainText('Country is required');
+        await expect(pageRegister.phoneNumberInputError).toContainText('Phone is required.');
+        await expect(pageRegister.emailInputError).toContainText('Email is required');
+        await expect(pageRegister.passwordInputError).toContainText('Password is required');
     })
 });

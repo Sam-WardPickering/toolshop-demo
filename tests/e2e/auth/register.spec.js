@@ -64,6 +64,9 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be younger than 75 years old.');
     });
+    test('customer registration rejected when dob format is invalid', async ({ page }) => {
+
+    });
     test('customer registration rejected when email is invalid', async ({ page }) => {
         const userObj = { ...users.sam, email: 'incorrectemail' } 
 

@@ -64,8 +64,16 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be younger than 75 years old.');
     });
-    test('customer registration rejected when dob format is invalid', async ({ page }) => {
+    test.only('customer registration rejected when dob format is invalid', async ({ page }) => {
+        const email = generateValidEmail();
 
+        const userObj = { ...users.sam, email, dob: '1234' };
+
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.emailInputError).toContainText('Please enter a valid date in YYYY-MM-DD format.');
     });
     test('customer registration rejected when email is invalid', async ({ page }) => {
         const userObj = { ...users.sam, email: 'incorrectemail' } 
@@ -85,7 +93,7 @@ test.describe('Registration', () => {
 
         await expect(pageRegister.registerErrorAlert).toContainText('A customer with this email address already exists.');
     });
-    test.only('required fields display error messages when submitted without values', async ({ page }) => {
+    test('required fields display error messages when submitted without values', async ({ page }) => {
         const pageRegister = new PageRegister(page);
 
         await pageRegister.registerButton.click();

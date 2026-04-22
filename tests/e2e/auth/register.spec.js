@@ -17,6 +17,7 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(validUserObj);
 
+        await page.waitForURL('**/auth/login', { timeout: 15000 });
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     }); 
     test('customer registration rejected when age value < 18', async ({ page }) => {
@@ -39,6 +40,7 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(userObj);
 
+        await page.waitForURL('**/auth/login', { timeout: 15000 });
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
     test('customer registration accepted when age value = 75', async ({ page }) => {
@@ -50,6 +52,7 @@ test.describe('Registration', () => {
 
         await pageRegister.registerUser(userObj);
 
+        await page.waitForURL('**/auth/login', { timeout: 15000 });
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
     // NOTE: Docs say max age is 75, but app actually accepts up to ~92.
@@ -159,6 +162,7 @@ test.describe('Registration', () => {
 
             await pageRegister.registerUser(userObj);
 
+            await page.waitForURL('**/auth/login', { timeout: 15000 });
             await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
         });
     });

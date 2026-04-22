@@ -115,6 +115,9 @@ test.describe('Registration', () => {
         await expect(pageRegister.emailInputError).toContainText('Email is required');
         await expect(pageRegister.passwordInputError).toContainText('Password is required');
     });
+    test('registration rejected when phone number contains non-numeric characters', async ({ page}) => {
+
+    });
     test.describe('field max lengths', () => {
         // first name = 40 characters
         // last name = 20 characters
@@ -166,5 +169,6 @@ test.describe('Registration', () => {
             await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
         });
     });
+
 
 });

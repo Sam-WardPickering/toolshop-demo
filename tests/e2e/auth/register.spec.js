@@ -3,6 +3,7 @@ import { generateValidEmail } from '../../helpers/email.js';
 import { PageRegister } from '../../pages/PageRegister.js';
 import { users } from '../../test-data/users.js';
 import { generateDOB } from '../../helpers/date.js';
+import { generateStringLength } from '../../helpers/string.js';
 
 test.describe('Registration', () => {
     test.beforeEach(async ({ page }) => {
@@ -111,22 +112,36 @@ test.describe('Registration', () => {
         await expect(pageRegister.emailInputError).toContainText('Email is required');
         await expect(pageRegister.passwordInputError).toContainText('Password is required');
     });
-    test('registration rejected when field values exceed max length', async ({ page }) => {
-        const pageRegister = new PageRegister(page);
+    test.describe('field max lengths', () => {
+        // first name = 40 characters
+        // last name = 20 characters
+        // street = 70 characters
+        // city = 40 characters
+        // state = 40 characters
+        // postal code = 10 characters
 
-        await pageRegister.registerButton.click();
+        test.only('registration rejected when field values exceed max length', async ({ page }) => {
+            const pageRegister = new PageRegister(page);
 
-        await expect(pageRegister.firstNameInputError).toContainText('First name is required');
-        await expect(pageRegister.lastNameInputError).toContainText('Last name is required');
-        await expect(pageRegister.dobInputError).toContainText('Date of Birth is required');
-        await expect(pageRegister.streetInputError).toContainText('Street is required');
-        await expect(pageRegister.postalCodeError).toContainText('Postcode is required');
-        await expect(pageRegister.houseNumberError).toContainText('House number is required');
-        await expect(pageRegister.cityInputError).toContainText('City is required');
-        await expect(pageRegister.stateInputError).toContainText('State is required');
-        await expect(pageRegister.countrySelectError).toContainText('Country is required');
-        await expect(pageRegister.phoneNumberInputError).toContainText('Phone is required.');
-        await expect(pageRegister.emailInputError).toContainText('Email is required');
-        await expect(pageRegister.passwordInputError).toContainText('Password is required');
-    })
+            const userObj = {
+                ...users.sam,
+                firstName: generateStringLength(41),
+                lastName: generateStringLength(21),
+                street: generateStringLength(71),
+                city: generateStringLength(41),
+                state: generateStringLength(41),
+                postalCode: generateStringLength(11)
+            }
+
+            await pageRegister.registerUser(userObj);
+
+            await expect(pageRegister.registerErrorAlert).toContainText('The first name field must not be greater than 40 characters.');
+            await expect(pageRegister.registerErrorAlert).toContainText('The last name field must not be greater than 20 characters.');
+            await expect(pageRegister.registerErrorAlert).toContainText('The address.street field must not be greater than 70 characters.');
+            await expect(pageRegister.registerErrorAlert).toContainText('The address.city field must not be greater than 40 characters.');
+            await expect(pageRegister.registerErrorAlert).toContainText('The address.state field must not be greater than 40 characters.');
+            await expect(pageRegister.registerErrorAlert).toContainText('The address.postal code field must not be greater than 10 characters.');
+        });
+    });
+
 });

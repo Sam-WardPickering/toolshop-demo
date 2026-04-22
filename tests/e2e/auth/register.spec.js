@@ -10,8 +10,7 @@ test.describe('Registration', () => {
         await page.goto('/auth/register');
     });
     test('new customer registration (happy path)', async ({ page }) => {
-        const email = generateValidEmail();
-        const validUserObj = { ...users.sam, email };
+        const validUserObj = { ...users.sam, email: generateValidEmail() };
 
         const pageRegister = new PageRegister(page);
 
@@ -21,9 +20,11 @@ test.describe('Registration', () => {
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     }); 
     test('customer registration rejected when age value < 18', async ({ page }) => {
-        const email = generateValidEmail();
-
-        const userObj = { ...users.sam, email, dob: generateDOB(17) } 
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(), 
+            dob: generateDOB(17)
+        }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -32,9 +33,11 @@ test.describe('Registration', () => {
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be 18 years old.');
     });
     test('customer registration accepted when age value = 18', async ({ page }) => {
-        const email = generateValidEmail();
-
-        const userObj = { ...users.sam, email, dob: generateDOB(18) } 
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(), 
+            dob: generateDOB(18) 
+        }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -44,9 +47,11 @@ test.describe('Registration', () => {
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
     test('customer registration accepted when age value = 75', async ({ page }) => {
-        const email = generateValidEmail();
-
-        const userObj = { ...users.sam, email, dob: generateDOB(75) } 
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(), 
+            dob: generateDOB(75) 
+        }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -58,9 +63,11 @@ test.describe('Registration', () => {
     // NOTE: Docs say max age is 75, but app actually accepts up to ~92.
     // In a real project, this would be raised as a bug ticket.
     test.fixme('customer registration rejected when age value > 75', async ({ page }) => {
-        const email = generateValidEmail();
-
-        const userObj = { ...users.sam, email, dob: generateDOB(76) } 
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(), 
+            dob: generateDOB(76)
+        }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -69,9 +76,11 @@ test.describe('Registration', () => {
         await expect(pageRegister.registerErrorAlert).toContainText('Customer must be younger than 75 years old.');
     });
     test('customer registration rejected when dob format is invalid', async ({ page }) => {
-        const email = generateValidEmail();
-
-        const userObj = { ...users.sam, email, dob: '1234' };
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(),
+            dob: '1234' 
+        };
 
         const pageRegister = new PageRegister(page);
 
@@ -80,7 +89,7 @@ test.describe('Registration', () => {
         await expect(pageRegister.dobInputError).toContainText('Please enter a valid date in YYYY-MM-DD format.');
     });
     test('customer registration rejected when email is invalid', async ({ page }) => {
-        const userObj = { ...users.sam, email: 'incorrectemail' } 
+        const userObj = { ...users.sam, email: 'incorrectemail' }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -89,7 +98,7 @@ test.describe('Registration', () => {
         await expect(pageRegister.emailInputError).toContainText('Email format is invalid');
     });
     test('customer registration rejected when email already exists', async ({ page }) => {
-        const userObj = { ...users.sam, email: users.admin.email } 
+        const userObj = { ...users.sam, email: users.admin.email }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -119,8 +128,8 @@ test.describe('Registration', () => {
         const userObj = { 
             ...users.sam, 
             email: generateValidEmail(), 
-            phoneNumber: 'a1bce345', 
-        } 
+            phoneNumber: 'a1bce345' 
+        }; 
 
         const pageRegister = new PageRegister(page);
 
@@ -148,7 +157,7 @@ test.describe('Registration', () => {
                 city: generateStringLength(41),
                 state: generateStringLength(41),
                 postalCode: generateStringLength(11)
-            }
+            };
 
             await pageRegister.registerUser(userObj);
 
@@ -171,7 +180,7 @@ test.describe('Registration', () => {
                 city: generateStringLength(40),
                 state: generateStringLength(40),
                 postalCode: generateStringLength(10)
-            }
+            };
 
             await pageRegister.registerUser(userObj);
 

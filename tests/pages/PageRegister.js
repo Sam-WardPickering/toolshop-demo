@@ -46,10 +46,10 @@ export class PageRegister {
         await this.firstNameInput.fill(userObj.firstName);
         await this.lastNameInput.fill(userObj.lastName);
         await this.dobInput.fill(userObj.dob);
-        await this.streetInput.fill(userObj.street);
         await this.postalCode.fill(userObj.postalCode);
         await this.houseNumber.fill(userObj.houseNumber);
         await this.cityInput.fill(userObj.city);
+        await this.streetInput.fill(userObj.street);
         await this.stateInput.fill(userObj.state);
         await this.countrySelect.click();         // click first to trigger event handling
         await this.countrySelect.selectOption(userObj.country);

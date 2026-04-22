@@ -143,7 +143,24 @@ test.describe('Registration', () => {
             await expect(pageRegister.registerErrorAlert).toContainText('The address.state field must not be greater than 40 characters.');
             await expect(pageRegister.registerErrorAlert).toContainText('The address.postal code field must not be greater than 10 characters.');
         });
+        test('registration accepted when field values are at max length', async ({ page }) => {
+            const pageRegister = new PageRegister(page);
 
+            const userObj = {
+                ...users.sam,
+                email: generateValidEmail(),
+                firstName: generateStringLength(40),
+                lastName: generateStringLength(20),
+                street: generateStringLength(70),
+                city: generateStringLength(40),
+                state: generateStringLength(40),
+                postalCode: generateStringLength(10)
+            }
+
+            await pageRegister.registerUser(userObj);
+
+            await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
+        });
     });
 
 });

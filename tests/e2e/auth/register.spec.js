@@ -120,7 +120,7 @@ test.describe('Registration', () => {
         // state = 40 characters
         // postal code = 10 characters
 
-        test.only('registration rejected when field values exceed max length', async ({ page }) => {
+        test('registration rejected when field values exceed max length', async ({ page }) => {
             const pageRegister = new PageRegister(page);
 
             const userObj = {
@@ -143,6 +143,7 @@ test.describe('Registration', () => {
             await expect(pageRegister.registerErrorAlert).toContainText('The address.state field must not be greater than 40 characters.');
             await expect(pageRegister.registerErrorAlert).toContainText('The address.postal code field must not be greater than 10 characters.');
         });
+
     });
 
 });

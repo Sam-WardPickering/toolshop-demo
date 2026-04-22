@@ -116,7 +116,17 @@ test.describe('Registration', () => {
         await expect(pageRegister.passwordInputError).toContainText('Password is required');
     });
     test('registration rejected when phone number contains non-numeric characters', async ({ page}) => {
+        const userObj = { 
+            ...users.sam, 
+            email: generateValidEmail(), 
+            phoneNumber: 'a1bce345', 
+        } 
 
+        const pageRegister = new PageRegister(page);
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.phoneNumberInputError).toContainText('Only numbers are allowed.');
     });
     test.describe('field max lengths', () => {
         // first name = 40 characters

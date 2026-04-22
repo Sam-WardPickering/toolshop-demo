@@ -125,6 +125,7 @@ test.describe('Registration', () => {
 
             const userObj = {
                 ...users.sam,
+                email: generateValidEmail(),
                 firstName: generateStringLength(41),
                 lastName: generateStringLength(21),
                 street: generateStringLength(71),

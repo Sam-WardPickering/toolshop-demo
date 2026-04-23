@@ -125,69 +125,59 @@ test.describe('Registration', () => {
         await expect(pageRegister.passwordInputError).toContainText('Password is required');
     });
     test('registration rejected when phone number contains non-numeric characters', async ({ page}) => {
+        const pageRegister = new PageRegister(page);
+        
         const userObj = { 
             ...users.sam, 
             email: generateValidEmail(), 
             phoneNumber: 'a1bce345' 
         }; 
 
-        const pageRegister = new PageRegister(page);
-
         await pageRegister.registerUser(userObj);
 
         await expect(pageRegister.phoneNumberInputError).toContainText('Only numbers are allowed.');
     });
-    test.describe('field max lengths', () => {
-        // first name = 40 characters
-        // last name = 20 characters
-        // street = 70 characters
-        // city = 40 characters
-        // state = 40 characters
-        // postal code = 10 characters
+    test('registration rejected when field values exceed max length', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
 
-        test('registration rejected when field values exceed max length', async ({ page }) => {
-            const pageRegister = new PageRegister(page);
+        const userObj = {
+            ...users.sam,
+            email: generateValidEmail(),
+            firstName: generateStringLength(41),    // max length 40 characters
+            lastName: generateStringLength(21),     // max length 20 characters
+            street: generateStringLength(71),       // max length 70 characters
+            city: generateStringLength(41),         // max length 40 characters
+            state: generateStringLength(41),        // max length 40 characters
+            postalCode: generateStringLength(11)    // max length 10 characters
+        };
 
-            const userObj = {
-                ...users.sam,
-                email: generateValidEmail(),
-                firstName: generateStringLength(41),
-                lastName: generateStringLength(21),
-                street: generateStringLength(71),
-                city: generateStringLength(41),
-                state: generateStringLength(41),
-                postalCode: generateStringLength(11)
-            };
+        await pageRegister.registerUser(userObj);
 
-            await pageRegister.registerUser(userObj);
-
-            await expect(pageRegister.registerErrorAlert).toContainText('The first name field must not be greater than 40 characters.');
-            await expect(pageRegister.registerErrorAlert).toContainText('The last name field must not be greater than 20 characters.');
-            await expect(pageRegister.registerErrorAlert).toContainText('The address.street field must not be greater than 70 characters.');
-            await expect(pageRegister.registerErrorAlert).toContainText('The address.city field must not be greater than 40 characters.');
-            await expect(pageRegister.registerErrorAlert).toContainText('The address.state field must not be greater than 40 characters.');
-            await expect(pageRegister.registerErrorAlert).toContainText('The address.postal code field must not be greater than 10 characters.');
-        });
-        test('registration accepted when field values are at max length', async ({ page }) => {
-            const pageRegister = new PageRegister(page);
-
-            const userObj = {
-                ...users.sam,
-                email: generateValidEmail(),
-                firstName: generateStringLength(40),
-                lastName: generateStringLength(20),
-                street: generateStringLength(70),
-                city: generateStringLength(40),
-                state: generateStringLength(40),
-                postalCode: generateStringLength(10)
-            };
-
-            await pageRegister.registerUser(userObj);
-
-            await page.waitForURL('**/auth/login', { timeout: 15000 });
-            await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
-        });
+        await expect(pageRegister.registerErrorAlert).toContainText('The first name field must not be greater than 40 characters.');
+        await expect(pageRegister.registerErrorAlert).toContainText('The last name field must not be greater than 20 characters.');
+        await expect(pageRegister.registerErrorAlert).toContainText('The address.street field must not be greater than 70 characters.');
+        await expect(pageRegister.registerErrorAlert).toContainText('The address.city field must not be greater than 40 characters.');
+        await expect(pageRegister.registerErrorAlert).toContainText('The address.state field must not be greater than 40 characters.');
+        await expect(pageRegister.registerErrorAlert).toContainText('The address.postal code field must not be greater than 10 characters.');
     });
+    test('registration accepted when field values are at max length', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
 
+        const userObj = {
+            ...users.sam,
+            email: generateValidEmail(),
+            firstName: generateStringLength(40),    // max length 40 characters
+            lastName: generateStringLength(20),     // max length 20 characters
+            street: generateStringLength(70),       // max length 70 characters
+            city: generateStringLength(40),         // max length 40 characters
+            state: generateStringLength(40),        // max length 40 characters
+            postalCode: generateStringLength(10)    // max length 10 characters
+        };
+
+        await pageRegister.registerUser(userObj);
+
+        await page.waitForURL('**/auth/login', { timeout: 15000 });
+        await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
+    });
 
 });

@@ -223,13 +223,27 @@ test.describe('Registration', () => {
         await expect(pageRegister.passwordInputError).toContainText('Password can not include invalid characters.')
         await expect(pageRegister.passwordInputError).not.toContainText('Password must be minimal 6 characters long.')
     });
-    test.only('registration rejected when password does not contain uppercase letters', async ({ page }) => {
+    test('registration rejected when password does not contain uppercase letters', async ({ page }) => {
         const pageRegister = new PageRegister(page);
 
         const userObj = {
             ...users.sam,
             email: generateValidEmail(),
-            password: '5hortpa55word'
+            password: '$hortpa55word'
+        };
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.passwordInputError).toContainText('Password can not include invalid characters.')
+        await expect(pageRegister.passwordInputError).not.toContainText('Password must be minimal 6 characters long.')
+    });
+    test('registration rejected when password does not contain lowercase letters', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
+
+        const userObj = {
+            ...users.sam,
+            email: generateValidEmail(),
+            password: '$HORTPA55WORD'
         };
 
         await pageRegister.registerUser(userObj);

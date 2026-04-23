@@ -179,5 +179,21 @@ test.describe('Registration', () => {
         await page.waitForURL('**/auth/login', { timeout: 15000 });
         await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     });
+    
+    // NOTE: Password error incorrectly displays min length as 6, when it is actually 8
+    // In a real project, this would be raised as a bug ticket.
+    test.fixme('registration rejected when password is < 8 characters long', async ({ page }) => {
+        const pageRegister = new PageRegister(page);
+
+        const userObj = {
+            ...users.sam,
+            email: generateValidEmail(),
+            password: '$hortPW'
+        };
+
+        await pageRegister.registerUser(userObj);
+
+        await expect(pageRegister.passwordInputError).toContainText('Password must be minimal 6 characters long.')
+    })
 
 });

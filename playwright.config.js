@@ -34,6 +34,8 @@ export default defineConfig({
 
     /* Redefine what getByTestId selects */
     testIdAttribute: 'data-test',
+
+    screenshot: 'only-on-failure',
     
   },
   expect: {

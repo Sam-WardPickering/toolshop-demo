@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { generateValidEmail } from '../../helpers/email.js';
-import { PageRegister } from '../../pages/PageRegister.js';
+import { PageRegister } from '../../pages/index.js';
 import { users } from '../../test-data/users.js';
 import { generateDOB } from '../../helpers/date.js';
 import { generateStringLength } from '../../helpers/string.js';

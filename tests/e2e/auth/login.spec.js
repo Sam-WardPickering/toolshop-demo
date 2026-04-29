@@ -3,7 +3,7 @@ import { PageLogin } from '../../pages/index.js';
 import { users } from '../../test-data/users.js';
 
 test.describe('Login', () => {
-    test.only('Login is successful (happy path)', async ({ page }) => {
+    test('Login is successful (happy path)', async ({ page }) => {
         await page.goto('/auth/login');
 
         const pageLogin = new PageLogin(page);

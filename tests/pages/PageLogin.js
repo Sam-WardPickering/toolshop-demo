@@ -3,8 +3,10 @@ export class PageLogin {
         this.page = page;
 
         this.emailInput = page.getByTestId('email');
+        this.emailInputError = page.getByTestId('email-error');
         this.passwordInput = page.getByTestId('password');
         this.loginButton = page.getByTestId('login-submit');
+        
     }
 
     async login(userObj) {

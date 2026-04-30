@@ -3,9 +3,10 @@ import { PageLogin } from '../../pages/index.js';
 import { users } from '../../test-data/users.js';
 
 test.describe('Login', () => {
-    test('login is successful (happy path)', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
         await page.goto('/auth/login');
-
+    }); 
+    test('login is successful (happy path)', async ({ page }) => {
         const pageLogin = new PageLogin(page);
 
         const userObj = { 
@@ -19,8 +20,6 @@ test.describe('Login', () => {
         await expect(page).toHaveURL(/dashboard/);
     });
     test('login is unsuccessful with invalid email', async ({ page }) => {
-        await page.goto('/auth/login');
-
         const pageLogin = new PageLogin(page);
 
         const userObj = {
@@ -34,8 +33,6 @@ test.describe('Login', () => {
         await expect(pageLogin.emailInputError).toHaveText('Email format is invalid');
     });
     test('login is unsuccessful with no password', async ({ page }) => {
-        await page.goto('/auth/login');
-
         const pageLogin = new PageLogin(page);
 
         const userObj = {
@@ -49,8 +46,6 @@ test.describe('Login', () => {
         await expect(pageLogin.passwordInputError).toHaveText('Password is required');
     });
     test('login is unsuccessful with incorrect password', async ({ page }) => {
-        await page.goto('/auth/login');
-
         const pageLogin = new PageLogin(page);
 
         const userObj = {
@@ -64,8 +59,6 @@ test.describe('Login', () => {
         await expect(pageLogin.loginError).toHaveText('Invalid email or password');
     });
     test('login is unsuccessful with incorrect email', async ({ page }) => {
-        await page.goto('/auth/login');
-
         const pageLogin = new PageLogin(page);
 
         const userObj = {
@@ -77,5 +70,6 @@ test.describe('Login', () => {
 
         await expect(page).toHaveURL(/login/);
         await expect(pageLogin.loginError).toHaveText('Invalid email or password');
-    })
-})
+    });
+
+});

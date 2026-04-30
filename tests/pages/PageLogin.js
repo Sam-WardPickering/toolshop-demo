@@ -9,7 +9,8 @@ export class PageLogin {
         this.passwordInputError = page.getByTestId('password-error');
 
         this.loginButton = page.getByTestId('login-submit');
-        
+
+        this.loginError = page.getByTestId('login-error');
     }
 
     async login(userObj) {

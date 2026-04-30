@@ -33,7 +33,7 @@ test.describe('Login', () => {
         await expect(page).toHaveURL(/login/);
         await expect(pageLogin.emailInputError).toHaveText('Email format is invalid');
     });
-    test.only('Login is unsuccessful with no password', async ({ page }) => {
+    test('Login is unsuccessful with no password', async ({ page }) => {
         await page.goto('/auth/login');
 
         const pageLogin = new PageLogin(page);
@@ -48,4 +48,19 @@ test.describe('Login', () => {
         await expect(page).toHaveURL(/login/);
         await expect(pageLogin.passwordInputError).toHaveText('Password is required');
     });
+    test('Login is unsuccessful with incorrect password', async ({ page }) => {
+        await page.goto('/auth/login');
+
+        const pageLogin = new PageLogin(page);
+
+        const userObj = {
+            email: users.admin.email,
+            password: 'incorrect password'
+        };
+
+        await pageLogin.login(userObj);
+
+        await expect(page).toHaveURL(/login/);
+        await expect(pageLogin.loginError).toHaveText('Invalid email or password');
+    })
 })

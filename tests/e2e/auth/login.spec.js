@@ -62,5 +62,20 @@ test.describe('Login', () => {
 
         await expect(page).toHaveURL(/login/);
         await expect(pageLogin.loginError).toHaveText('Invalid email or password');
+    });
+    test('Login is unsuccessful with incorrect email', async ({ page }) => {
+        await page.goto('/auth/login');
+
+        const pageLogin = new PageLogin(page);
+
+        const userObj = {
+            email: 'test@email.com',
+            password: users.admin.password
+        };
+
+        await pageLogin.login(userObj);
+
+        await expect(page).toHaveURL(/login/);
+        await expect(pageLogin.loginError).toHaveText('Invalid email or password');
     })
 })

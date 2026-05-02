@@ -30,14 +30,14 @@ test.describe('Forgot Password', () => {
     });
     // An error box and error state is shown, but no error text is.
     // This would be raised as a bug in a real scenario.
-    test('User cannot reset apassword with invalid email', async ({ page }) => {
+    test.only('User cannot reset apassword with invalid email', async ({ page }) => {
         await page.goto('/auth/forgot-password');
 
         const pageForgotPassword = new PageForgotPassword(page);
 
         await pageForgotPassword.submitForgotPassword('invalidemail123');
 
-        expect(pageForgotPassword.emailInputError).toBeVisible();
+        await expect(pageForgotPassword.emailInputError).toBeVisible();
 
     });
 });

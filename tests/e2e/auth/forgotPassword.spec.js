@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { PageLogin, PageForgotPassword } from '../../pages/index.js';
 import { users } from '../../test-data/users.js';
+import { generateValidEmail } from '../../helpers/email.js';
 
 test.describe('Forgot Password', () => {
-    test.only('User can login successfuly after pasword reset (happy path)', async ({ page }) => {
+    test('User can login successfully after pasword reset (happy path)', async ({ page }) => {
         await page.goto('/auth/forgot-password');
 
         const userObj = {
@@ -25,6 +26,18 @@ test.describe('Forgot Password', () => {
 
         await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
         await expect(page).toHaveURL(/account/);
+
+    });
+    // An error box and error state is shown, but no error text is.
+    // This would be raised as a bug in a real scenario.
+    test('User cannot reset apassword with invalid email', async ({ page }) => {
+        await page.goto('/auth/forgot-password');
+
+        const pageForgotPassword = new PageForgotPassword(page);
+
+        await pageForgotPassword.submitForgotPassword('invalidemail123');
+
+        expect(pageForgotPassword.emailInputError).toBeVisible();
 
     });
 });

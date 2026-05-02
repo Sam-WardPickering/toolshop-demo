@@ -24,7 +24,7 @@ test.describe('Forgot Password', () => {
         await pageLogin.login(userObj);
 
         await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
-        await expect(page).toHaveURL(/dashboard/);
+        await expect(page).toHaveURL(/account/);
 
     });
 });

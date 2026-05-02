@@ -4,7 +4,7 @@ import { users } from '../../test-data/users.js';
 import { generateValidEmail } from '../../helpers/email.js';
 
 test.describe('Forgot Password', () => {
-    test('User can login successfully after pasword reset (happy path)', async ({ page }) => {
+    test.only('User can login successfully after pasword reset (happy path)', async ({ page }) => {
         await page.goto('/auth/forgot-password');
 
         const userObj = {
@@ -30,7 +30,7 @@ test.describe('Forgot Password', () => {
     });
     // An error box and error state is shown, but no error text is.
     // This would be raised as a bug in a real scenario.
-    test.only('User cannot reset apassword with invalid email', async ({ page }) => {
+    test('User cannot reset apassword with invalid email', async ({ page }) => {
         await page.goto('/auth/forgot-password');
 
         const pageForgotPassword = new PageForgotPassword(page);
@@ -39,5 +39,14 @@ test.describe('Forgot Password', () => {
 
         await expect(pageForgotPassword.emailInputError).toBeVisible();
 
+    });
+    test('Error displayed when submitting without a password', async ({ page }) => {
+        await page.goto('/auth/forgot-password');
+
+        const pageForgotPassword = new PageForgotPassword(page);
+
+        await pageForgotPassword.submitForgotPassword('');
+
+        await expect(pageForgotPassword.emailInputError).toContainText('Email is required');
     });
 });

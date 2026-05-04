@@ -53,4 +53,13 @@ test.describe('Forgot Password', () => {
 
         await expect(pageForgotPassword.emailInputError).toContainText('Email is required');
     });
+    test.only('Error displayed when resetting password for an email not in the system', async ({ page }) => {
+        await page.goto('/auth/forgot-password');
+
+        const pageForgotPassword = new PageForgotPassword(page);
+
+        await pageForgotPassword.submitForgotPassword('unregisteredemail98@email.com');
+
+        await expect(page.getByRole('alert')).toContainText('The selected email is invalid.');
+    })
 });

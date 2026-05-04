@@ -3,7 +3,7 @@ import { PageLogin, PageForgotPassword } from '../../pages/index.js';
 import { users } from '../../test-data/users.js';
 
 test.describe('Forgot Password', () => {
-    test('User can login successfully after pasword reset (happy path)', async ({ page, browserName }) => {
+    test('User can login successfully after password reset (happy path)', async ({ page, browserName }) => {
         // This test resets a shared user's password on a live server.
         // Running across multiple browsers in parallel causes concurrent login attempts,
         // which triggers the account lock (3 failed attempts). Single browser only.

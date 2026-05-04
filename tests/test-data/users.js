@@ -27,6 +27,13 @@ export const users = {
         lastName: 'Doe',
         email: 'customer@practicesoftwaretesting.com',
         password: 'welcome01',
+    },
+    defaultUser2: {
+        role: 'user',
+        firstName: 'Jack',
+        lastName: 'Howe',
+        email: 'customer2@practicesoftwaretesting.com',
+        password: 'welcome01'
     }
 
 }

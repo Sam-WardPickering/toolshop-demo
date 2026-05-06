@@ -15,7 +15,7 @@ export const test = base.extend({
         await pageLogin.login(userObj);
 
         await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
-        await expect(page).toHaveURL(/dashboard/);
+        await expect(page).toHaveURL(/account/);
         await use({ page });
     },
 });

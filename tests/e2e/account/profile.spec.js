@@ -5,7 +5,7 @@ test.describe('Profile', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/account/profile');
     });
-    test('', async ({ loggedInPage: { page } }) => {
+    test('User can successfully update profile (happy path)', async ({ loggedInPage: { page } }) => {
         // tests
         await page.goto('/account/profile');
 

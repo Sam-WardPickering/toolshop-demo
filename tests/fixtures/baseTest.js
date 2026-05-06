@@ -8,13 +8,13 @@ export const test = base.extend({
         const pageLogin = new PageLogin(page);
 
         const userObj = { 
-            email: users.defaultUser.email, 
-            password: users.defaultUser.password
+            email: users.sam.email, 
+            password: users.sam.password
         };
 
         await pageLogin.login(userObj);
 
-        await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
+        await expect(page.getByTestId('nav-menu')).toContainText('Sam Ward-Pickering');
         await expect(page).toHaveURL(/account/);
         await use({ page });
     },

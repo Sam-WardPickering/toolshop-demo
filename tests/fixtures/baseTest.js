@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test';
-import { PageLogin } from '../../pages/index.js';
-import { users } from '../../test-data/users.js';
+import { PageLogin } from '../pages/index.js';
+import { users } from '../test-data/users.js';
 
 export const test = base.extend({
     loggedInPage: async ({ page }, use) => {
@@ -19,3 +19,5 @@ export const test = base.extend({
         await use({ page });
     },
 });
+
+export { expect };

@@ -21,4 +21,16 @@ export class PageProfile {
         changePasswordBtn = page.getByTestId('change-password-submit');
 
     }
+
+    async updateProfile(userObj) {
+        firstNameInput.fill(userObj.firstName);
+        lastNameInput.fill(userObj.lastName);
+        // emailInput.fill();   /* Email input is not editable */
+        phoneInput.fill(userObj.phoneNumber);
+        streetInput.fill(userObj.street);
+        postCodeInput.fill(userObj.postalCode);
+        cityInput.fill(userObj.city);
+        stateInput.fill(userObj.state);
+        countryInput.fill(userObj.country);
+    }
 }

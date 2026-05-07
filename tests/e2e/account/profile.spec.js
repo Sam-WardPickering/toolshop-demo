@@ -5,10 +5,12 @@ test.describe('Profile', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/account/profile');
     });
-    test('User can successfully update profile (happy path)', async ({ loggedInPage: { page } }) => {
+    test('User can successfully update profile (happy path)', async ({ loggedInDefaultUser: { page } }) => {
         // tests
         await page.goto('/account/profile');
 
        
     })
+    // test field validation
+    // last name, 20 chars max
 })

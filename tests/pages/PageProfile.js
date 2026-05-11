@@ -3,34 +3,34 @@ export class PageProfile {
         this.page = page;
 
         /* Profile Detail Section */
-        firstNameInput = page.getByTestId('first-name');
-        lastNameInput = page.getByTestId('last-name');
-        emailInput = page.getByTestId('email');
-        phoneInput = page.getByTestId('phone');
-        streetInput = page.getByTestId('street');
-        postCodeInput = page.getByTestId('postal_code');
-        cityInput = page.getByTestId('city');
-        stateInput = page.getByTestId('state');
-        countryInput = page.getByTestId('country');
-        updateProfileBtn = page.getByTestId('update-profile-submit');
+        this.firstNameInput = page.getByTestId('first-name');
+        this.lastNameInput = page.getByTestId('last-name');
+        this.emailInput = page.getByTestId('email');
+        this.phoneInput = page.getByTestId('phone');
+        this.streetInput = page.getByTestId('street');
+        this.postCodeInput = page.getByTestId('postal_code');
+        this.cityInput = page.getByTestId('city');
+        this.stateInput = page.getByTestId('state');
+        this.countryInput = page.getByTestId('country');
+        this.updateProfileBtn = page.getByTestId('update-profile-submit');
 
         /* Change password section */
-        currentPasswordInput = page.getByTestId('current-password');
-        newPasswordInput = page.getByTestId('new-password');
-        confirmNewPasswordInput = page.getByTestId('new-password-confirm');
-        changePasswordBtn = page.getByTestId('change-password-submit');
+        this.currentPasswordInput = page.getByTestId('current-password');
+        this.newPasswordInput = page.getByTestId('new-password');
+        this.confirmNewPasswordInput = page.getByTestId('new-password-confirm');
+        this.changePasswordBtn = page.getByTestId('change-password-submit');
 
     }
 
     async updateProfile(userObj) {
-        firstNameInput.fill(userObj.firstName);
-        lastNameInput.fill(userObj.lastName);
+        this.firstNameInput.fill(userObj.firstName);
+        this.lastNameInput.fill(userObj.lastName);
         // emailInput.fill();   /* Email input is not editable */
-        phoneInput.fill(userObj.phoneNumber);
-        streetInput.fill(userObj.street);
-        postCodeInput.fill(userObj.postalCode);
-        cityInput.fill(userObj.city);
-        stateInput.fill(userObj.state);
-        countryInput.fill(userObj.country);
+        this.phoneInput.fill(userObj.phoneNumber);
+        this.streetInput.fill(userObj.street);
+        this.postCodeInput.fill(userObj.postalCode);
+        this.cityInput.fill(userObj.city);
+        this.stateInput.fill(userObj.state);
+        this.countryInput.fill(userObj.country);
     }
 }

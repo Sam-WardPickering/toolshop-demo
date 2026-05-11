@@ -13,7 +13,7 @@ test.describe('Profile', () => {
 
         pageProfile.updateProfile(users.sam);
 
-       
+       await expect(pageProfile.firstNameInput).toHaveText(users.sam.firstName);
     });
     // test field validation
     // last name, 20 chars max

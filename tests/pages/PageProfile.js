@@ -23,14 +23,14 @@ export class PageProfile {
     }
 
     async updateProfile(userObj) {
-        this.firstNameInput.fill(userObj.firstName);
-        this.lastNameInput.fill(userObj.lastName);
+        await this.firstNameInput.fill(userObj.firstName);
+        await this.lastNameInput.fill(userObj.lastName);
         // emailInput.fill();   /* Email input is not editable */
-        this.phoneInput.fill(userObj.phoneNumber);
-        this.streetInput.fill(userObj.street);
-        this.postCodeInput.fill(userObj.postalCode);
-        this.cityInput.fill(userObj.city);
-        this.stateInput.fill(userObj.state);
-        this.countryInput.fill(userObj.country);
+        await this.phoneInput.fill(userObj.phoneNumber);
+        await this.streetInput.fill(userObj.street);
+        await this.postCodeInput.fill(userObj.postalCode);
+        await this.cityInput.fill(userObj.city);
+        await this.stateInput.fill(userObj.state);
+        await this.countryInput.fill(userObj.country);
     }
 }

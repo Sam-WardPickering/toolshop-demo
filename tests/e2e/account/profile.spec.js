@@ -27,7 +27,14 @@ test.describe('Profile', () => {
         await expect(pageProfile.stateInput).toHaveText(users.sam.state);
         await expect(pageProfile.countryInput).toHaveText(users.sam.country);
 
+        // Undo profile update changes, revert back to defaultUser data
+        await pageProfile.updateProfile(users.defaultUser);
 
+        await expect(page.getByRole('alert')).toContainText('Your profile is successfully updated!');
+        await expect(pageProfile.firstNameInput).toHaveText(users.defaultUser.firstName);
+        await expect(pageProfile.lastNameInput).toHaveText(users.defaultUser.lastName);
+        await expect(pageProfile.phoneInput).toHaveText("");
+        
     });
     // test field validation
     // last name, 20 chars max

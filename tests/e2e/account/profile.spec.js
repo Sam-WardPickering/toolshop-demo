@@ -13,7 +13,7 @@ test.describe('Profile', () => {
 
         await pageProfile.updateProfile(users.sam);
 
-        await expect(page.getByRole('alert')).toContainText('Your profile is successfully updated!');
+        await expect(page.getByText('Your profile is successfully updated!')).toBeVisible();        await expect(pageProfile.firstNameInput).toHaveText(users.defaultUser.firstName);
 
         await expect(pageProfile.firstNameInput).toHaveText(users.sam.firstName);
         await expect(pageProfile.lastNameInput).toHaveText(users.sam.lastName);
@@ -27,8 +27,7 @@ test.describe('Profile', () => {
         // Undo profile update changes, revert back to defaultUser data
         await pageProfile.updateProfile(users.defaultUser);
 
-        await expect(page.getByRole('alert')).toContainText('Your profile is successfully updated!');
-        await expect(pageProfile.firstNameInput).toHaveText(users.defaultUser.firstName);
+        await expect(page.getByText('Your profile is successfully updated!')).toBeVisible();        await expect(pageProfile.firstNameInput).toHaveText(users.defaultUser.firstName);
         await expect(pageProfile.lastNameInput).toHaveText(users.defaultUser.lastName);
         await expect(pageProfile.phoneInput).toHaveText("");
         

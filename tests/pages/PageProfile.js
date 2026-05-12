@@ -32,5 +32,7 @@ export class PageProfile {
         await this.cityInput.fill(userObj.city || "");
         await this.stateInput.fill(userObj.state || "");
         await this.countryInput.fill(userObj.country || "");
+
+        await this.updateProfileBtn.click();
     }
 }

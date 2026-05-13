@@ -44,7 +44,7 @@ test.describe('Profile', () => {
         await page.goto('/account/profile');
         const pageProfile = new PageProfile(page);
 
-        pageProfile.updatePassword(users.defaultUser.password, users.defaultUser.password);
+        await pageProfile.updatePassword(users.defaultUser.password, users.defaultUser.password);
 
         await expect(page.getByText('New Password cannot be same as your current password.')).toBeVisible();    
     });

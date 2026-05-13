@@ -38,10 +38,14 @@ test.describe('Profile', () => {
         await expect(pageProfile.phoneInput).toHaveValue("");
         
     });
-    test('password reset cannot reuse the current password', async ({ loggedInPage: { page }, browserName }) => {
+    test.only('password reset cannot reuse the current password', async ({ loggedInPage: { page }, browserName }) => {
         test.skip(browserName !== 'chromium', 'Shared state - run on single browser only');
 
         await page.goto('/account/profile');
         const pageProfile = new PageProfile(page);
+
+        pageProfile.updatePassword(users.defaultUser.password, users.defaultUser.password);
+
+        await expect(page.getByText('New Password cannot be same as your current password.')).toBeVisible();    
     });
 })

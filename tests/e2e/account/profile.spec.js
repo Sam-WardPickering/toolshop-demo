@@ -3,10 +3,9 @@ import { test, expect } from '../../fixtures/baseTest.js';
 import { users } from '../../test-data/users.js';
 
 test.describe('Profile', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto('/account/profile');
-    });
-    test('User can successfully update profile (happy path)', async ({ loggedInDefaultUser: { page }, browserName }) => {
+    test.use({ loginUser: users.defaultUser });
+
+    test('User can successfully update profile (happy path)', async ({ loggedInPage: { page }, browserName }) => {
         // Profile tests modify shared user data on a live server.
         // Running in parallel across browsers causes state conflicts. Single browser only.
         test.skip(browserName !== 'chromium', 'Shared state - run on single browser only');
@@ -39,7 +38,7 @@ test.describe('Profile', () => {
         await expect(pageProfile.phoneInput).toHaveValue("");
         
     });
-    test('password reset cannot reuse the current password', async ({ lpage }) => {
+    test('password reset cannot reuse the current password', async ({ loggedInPage: { page }, browserName }) => {
         test.skip(browserName !== 'chromium', 'Shared state - run on single browser only');
 
         await page.goto('/account/profile');

@@ -35,4 +35,11 @@ export class PageProfile {
 
         await this.updateProfileBtn.click();
     }
+
+    async updatePassword(currentPassword, newPassword) {
+        await this.currentPasswordInput.fill(currentPassword);
+        await this.newPasswordInput.fill(newPassword);
+        await this.confirmNewPasswordInput.fill(newPassword);
+        await this.changePasswordBtn.click();
+    }
 }

@@ -7,7 +7,7 @@ test.describe('Profile', () => {
         await page.goto('/account/profile');
     });
     test('User can successfully update profile (happy path)', async ({ loggedInDefaultUser: { page }, browserName }) => {
-         // Profile tests modify shared user data on a live server.
+        // Profile tests modify shared user data on a live server.
         // Running in parallel across browsers causes state conflicts. Single browser only.
         test.skip(browserName !== 'chromium', 'Shared state - run on single browser only');
 
@@ -39,6 +39,7 @@ test.describe('Profile', () => {
         await expect(pageProfile.phoneInput).toHaveValue("");
         
     });
-    // test field validation
-    // last name, 20 chars max
+    test('password reset cannot reuse the current password', async ({ page }) => {
+
+    });
 })

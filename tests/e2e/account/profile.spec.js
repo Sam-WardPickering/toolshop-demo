@@ -39,7 +39,10 @@ test.describe('Profile', () => {
         await expect(pageProfile.phoneInput).toHaveValue("");
         
     });
-    test('password reset cannot reuse the current password', async ({ page }) => {
+    test('password reset cannot reuse the current password', async ({ lpage }) => {
+        test.skip(browserName !== 'chromium', 'Shared state - run on single browser only');
 
+        await page.goto('/account/profile');
+        const pageProfile = new PageProfile(page);
     });
 })

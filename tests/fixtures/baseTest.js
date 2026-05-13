@@ -3,18 +3,17 @@ import { PageLogin } from '../pages/index.js';
 import { users } from '../test-data/users.js';
 
 export const test = base.extend({
-    loggedInDefaultUser: async ({ page }, use) => {
+    loginUser: [null, { option: true }],
+
+    loggedInPage: async ({ page, loginUser }, use) => {
         await page.goto('/auth/login');
         const pageLogin = new PageLogin(page);
 
-        const userObj = { 
-            email: users.defaultUser.email, 
-            password: users.defaultUser.password
-        };
+        await pageLogin.login({
+            email: loginUser.email,
+            password: loginUser.password
+        });
 
-        await pageLogin.login(userObj);
-
-        await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
         await expect(page).toHaveURL(/account/);
         await use({ page });
     },

@@ -47,17 +47,28 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: 'tests/e2e/**/*.spec.js',
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      testMatch: 'tests/e2e/**/*.spec.js',
     },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      testMatch: 'tests/e2e/**/*.spec.js',
       retries: 3,
+      
+    },
+    {
+      name: 'api',
+      use: {
+          baseURL: 'https://api.practicesoftwaretesting.com',
+      },
+      testMatch: 'tests/api/**/*.spec.js',
     },
 
     /* Test against mobile viewports. */

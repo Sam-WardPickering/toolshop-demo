@@ -16,7 +16,17 @@ test.describe('GET requests', () => {
             expect(brand).toHaveProperty('slug');
         }
     });
-    
+    test('GET a specific brand', async ({ request }) => {
+       const brandId = '01KRYVYXYSN58RD3A71EK1FXTY';
+
+       const response = await request.get(`/brands/${brandId}`);
+       const responseJson = await response.json();
+
+       expect(response.status()).toBe(200);
+
+       console.log(responseJson);
+    })
+
 });
 
 

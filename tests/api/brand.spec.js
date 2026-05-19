@@ -49,5 +49,11 @@ test.describe('GET requests', () => {
 
 });
 
+test.describe('POST requests', () => {
+    test('POST request to create new brand', async ({ page }) => {
+
+    });
+});
+
 
 

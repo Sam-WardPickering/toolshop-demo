@@ -17,12 +17,20 @@ test.describe('GET requests', () => {
         }
     });
     test('GET a specific brand', async ({ request }) => {
-       const brandId = '01KRYVYXYSN58RD3A71EK1FXTY';
+       const brand = {
+        brandId: '01KRYVYXYSN58RD3A71EK1FXTY',
+        brandName: 'ForgeFlex Tools',
+        brandSlug: 'forgeflex-tools'
+       };
 
-       const response = await request.get(`/brands/${brandId}`);
+       const response = await request.get(`/brands/${brand.brandId}`);
        const responseJson = await response.json();
 
        expect(response.status()).toBe(200);
+       
+       expect(responseJson.id).toBe(brand.brandId);
+       expect(responseJson.name).toBe(brand.brandName);
+       expect(responseJson.slug).toBe(brand.brandSlug);
 
        console.log(responseJson);
     })

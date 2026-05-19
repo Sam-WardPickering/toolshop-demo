@@ -31,6 +31,21 @@ test.describe('GET requests', () => {
        expect(responseJson.name).toBe(brand.name);
        expect(responseJson.slug).toBe(brand.slug);
     });
+    test('GET a specific brand by search query', async ({ request }) => {
+        const brands = await request.get('/brands');
+        const brandsJson = await brands.json();
+
+        const brand = brandsJson[0];
+
+        const response = await request.get(`/brands/search?q=${brand.name}`);
+        const responseJson = await response.json();
+
+        expect(response.status()).toBe(200);
+
+        expect(responseJson[0].id).toBe(brand.id);
+        expect(responseJson[0].name).toBe(brand.name);
+        expect(responseJson[0].slug).toBe(brand.slug);
+    });
 
 });
 

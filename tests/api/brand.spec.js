@@ -50,8 +50,17 @@ test.describe('GET requests', () => {
 });
 
 test.describe('POST requests', () => {
-    test('POST request to create new brand', async ({ page }) => {
+    test.only('POST request to create new brand', async ({ request }) => {
+        const newBrand = {
+            name: "sams brand",
+            slug: "sams-brand"
+        }
 
+        const newBrandReponse = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        expect(newBrandReponse.status()).toBe(201);
     });
 });
 

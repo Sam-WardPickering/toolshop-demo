@@ -5,7 +5,6 @@ test('GET all brands', async ({ request }) => {
     const responseJson = await response.json();
 
     await expect(response.status()).toBe(200);
-    console.log(responseJson);
 
     await expect(Array.isArray(responseJson)).toBeTruthy();
     await expect(responseJson.length).toBeGreaterThan(0);

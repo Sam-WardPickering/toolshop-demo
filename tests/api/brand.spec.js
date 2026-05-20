@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { getUniqueBrand, getUniqueBrandSlug } from '../helpers/brand.js';
 
 test.describe('GET requests', () => {
     test('GET all brands', async ({ request }) => {
@@ -52,21 +53,23 @@ test.describe('GET requests', () => {
 test.describe('POST requests', () => {
     test.only('POST request to create new brand', async ({ request }) => {
         const newBrand = {
-            name: "sams brand",
-            slug: "sams-brand"
+            name: getUniqueBrand(),
+            slug: getUniqueBrandSlug()
         }
 
         const newBrandResponse = await request.post('/brands', {
             data: newBrand,
         });
 
+        const newBrandResponseJson = newBrandResponse.json();
+
         expect(newBrandResponse.status()).toBe(201);
 
-        console.log(newBrandResponse);
+        console.log(newBrandResponseJson);
 
-        expect(newBrandResponse.id).toHaveProperty('id');
-        expect(newBrandResponse.name).toBe(newBrand.name);
-        expect(newBrandResponse.slug).toBe(newBrand.slug);
+        expect(newBrandResponseJson).toHaveProperty('id');
+        expect(newBrandResponseJson.name).toBe(newBrand.name);
+        expect(newBrandResponseJson.slug).toBe(newBrand.slug);
     });
 });
 

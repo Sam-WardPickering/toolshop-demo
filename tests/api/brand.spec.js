@@ -74,6 +74,8 @@ test.describe('POST requests', () => {
 
 test.describe('PUT requests', () => {
     test.only('PUT request to update a brand', async ({ request }) => {
+
+        /* Create new brand */
         const brandNumber = randomUUID().slice(0,8);
         const newBrand = {
             name: `sams brand ${brandNumber}`,
@@ -92,6 +94,8 @@ test.describe('PUT requests', () => {
         expect(newBrandResponseJson.name).toBe(newBrand.name);
         expect(newBrandResponseJson.slug).toBe(newBrand.slug);
 
+        /* Update brand */
+
         const updatedBrand = {
             name: `sams updated brand ${brandNumber}`,
             slug: `sams-updated-brand-${brandNumber}`
@@ -106,6 +110,17 @@ test.describe('PUT requests', () => {
         const updatedBrandResponseJson = await updatedBrandResponse.json();
 
         expect(updatedBrandResponseJson.success).toBe(true);
+
+        /* Get updated brand */
+        const getUpdateResponse = await request.get(`/brands/${newBrandResponseJson.id}`);
+
+        expect(getUpdateResponse.status()).toBe(200);
+
+        const responseJson = await getUpdateResponse.json();
+
+        expect(responseJson.id).toBe(newBrandResponseJson.id);
+        expect(responseJson.name).toBe(updatedBrand.name);
+        expect(responseJson.slug).toBe(updatedBrand.slug);
     });
 })
 

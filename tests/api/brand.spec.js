@@ -118,5 +118,52 @@ test.describe('PUT requests', () => {
         expect(responseJson.name).toBe(updatedBrand.name);
         expect(responseJson.slug).toBe(updatedBrand.slug);
     });
-})
+});
+
+test.describe('PATCH requests', () => {
+    test.only('PATCH request to update a brand', async ({ request }) => {
+
+        /* Create new brand */
+        const brandNumber = randomUUID().slice(0,8);
+        const newBrand = {
+            name: `sams brand ${brandNumber}`,
+            slug: `sams-brand-${brandNumber}`
+        }
+
+        const newBrandResponse = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        expect(newBrandResponse.status()).toBe(201);
+
+        const newBrandResponseJson = await newBrandResponse.json();
+
+        /* Update brand */
+
+        const updatedBrand = {
+            name: `sams brand patch ${brandNumber}`,
+        };
+
+        const updatedBrandResponse = await request.patch(`/brands/${newBrandResponseJson.id}`, {
+            data: updatedBrand,
+        });
+
+        expect(updatedBrandResponse.status()).toBe(200);
+
+        const updatedBrandResponseJson = await updatedBrandResponse.json();
+
+        expect(updatedBrandResponseJson.success).toBe(true);
+
+        /* Get updated brand */
+        const getUpdateResponse = await request.get(`/brands/${newBrandResponseJson.id}`);
+
+        expect(getUpdateResponse.status()).toBe(200);
+
+        const responseJson = await getUpdateResponse.json();
+
+        expect(responseJson.id).toBe(newBrandResponseJson.id);
+        expect(responseJson.name).toBe(updatedBrand.name);
+        expect(responseJson.slug).toBe(newBrand.slug);
+    });
+});
 

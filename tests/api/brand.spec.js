@@ -171,6 +171,8 @@ test.describe('PATCH requests', () => {
 
 test.describe('DELETE', () => {
  test.only('DELETE request to remove a brand', async ({ request}) => {
+
+    /* Get access token for deletion */
     const loginAdminResponse = await request.post('https://api.practicesoftwaretesting.com/users/login', {
         data: {
             email: users.admin.email,
@@ -182,6 +184,24 @@ test.describe('DELETE', () => {
 
     const loginAdminResponseJson = await loginAdminResponse.json();
     const accessToken = loginAdminResponseJson.access_token;
+
+    /* Create a new brand */
+    const brandNumber = randomUUID().slice(0,8);
+    const newBrand = {
+        name: `new brand ${brandNumber}`,
+        slug: `new-brand-${brandNumber}`
+    }
+
+    const newBrandResponse = await request.post('/brands', {
+        data: newBrand,
+    });
+
+    expect(newBrandResponse.status()).toBe(201);
+
+    const newBrandResponseJson = await newBrandResponse.json();
+
+    /* Delete newly created brand */
+    
 
  });
 });

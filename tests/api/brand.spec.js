@@ -51,7 +51,7 @@ test.describe('GET requests', () => {
 });
 
 test.describe('POST requests', () => {
-    test.only('POST request to create new brand', async ({ request }) => {
+    test('POST request to create new brand', async ({ request }) => {
         const brandId = randomUUID().slice(0,8);
         const newBrand = {
             name: `sams brand ${brandId}`,
@@ -66,13 +66,46 @@ test.describe('POST requests', () => {
 
         expect(newBrandResponse.status()).toBe(201);
 
-        console.log(newBrandResponseJson);
-
         expect(newBrandResponseJson).toHaveProperty('id');
         expect(newBrandResponseJson.name).toBe(newBrand.name);
         expect(newBrandResponseJson.slug).toBe(newBrand.slug);
     });
 });
 
+test.describe('PUT requests', () => {
+    test.only('PUT request to update a brand', async ({ request }) => {
+        const brandNumber = randomUUID().slice(0,8);
+        const newBrand = {
+            name: `sams brand ${brandNumber}`,
+            slug: `sams-brand-${brandNumber}`
+        }
 
+        const newBrandResponse = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        expect(newBrandResponse.status()).toBe(201);
+
+        const newBrandResponseJson = await newBrandResponse.json();
+
+        expect(newBrandResponseJson).toHaveProperty('id');
+        expect(newBrandResponseJson.name).toBe(newBrand.name);
+        expect(newBrandResponseJson.slug).toBe(newBrand.slug);
+
+        const updatedBrand = {
+            name: `sams updated brand ${brandNumber}`,
+            slug: `sams-updated-brand-${brandNumber}`
+        };
+
+        const updatedBrandResponse = await request.put(`/brands/${newBrandResponseJson.id}`, {
+            data: updatedBrand,
+        });
+
+        expect(updatedBrandResponse.status()).toBe(200);
+
+        const updatedBrandResponseJson = await updatedBrandResponse.json();
+
+        expect(updatedBrandResponseJson.success).toBe(true);
+    });
+})
 

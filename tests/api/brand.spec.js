@@ -73,7 +73,7 @@ test.describe('POST requests', () => {
 });
 
 test.describe('PUT requests', () => {
-    test.only('PUT request to update a brand', async ({ request }) => {
+    test('PUT request to update a brand', async ({ request }) => {
 
         /* Create new brand */
         const brandNumber = randomUUID().slice(0,8);

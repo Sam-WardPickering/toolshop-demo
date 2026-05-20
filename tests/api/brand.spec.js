@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getUniqueBrand, getUniqueBrandSlug } from '../helpers/brand.js';
+import { getUniqueName } from '../helpers/brand.js';
 
 test.describe('GET requests', () => {
     test('GET all brands', async ({ request }) => {
@@ -53,15 +53,15 @@ test.describe('GET requests', () => {
 test.describe('POST requests', () => {
     test.only('POST request to create new brand', async ({ request }) => {
         const newBrand = {
-            name: getUniqueBrand(),
-            slug: getUniqueBrandSlug()
+            name: getUniqueName('sams brand'),
+            slug: getUniqueName('sams-brand-')
         }
 
         const newBrandResponse = await request.post('/brands', {
             data: newBrand,
         });
 
-        const newBrandResponseJson = newBrandResponse.json();
+        const newBrandResponseJson = await newBrandResponse.json();
 
         expect(newBrandResponse.status()).toBe(201);
 

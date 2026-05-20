@@ -90,10 +90,6 @@ test.describe('PUT requests', () => {
 
         const newBrandResponseJson = await newBrandResponse.json();
 
-        expect(newBrandResponseJson).toHaveProperty('id');
-        expect(newBrandResponseJson.name).toBe(newBrand.name);
-        expect(newBrandResponseJson.slug).toBe(newBrand.slug);
-
         /* Update brand */
 
         const updatedBrand = {

@@ -201,7 +201,11 @@ test.describe('DELETE', () => {
     const newBrandResponseJson = await newBrandResponse.json();
 
     /* Delete newly created brand */
-    
+    const deletedBrandResponse = await request.delete(`/brands/${newBrandResponseJson.id}`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+        },
+    });
 
  });
 });

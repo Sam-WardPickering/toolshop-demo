@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { users } from '../test-data/users';
+import { access } from 'node:fs';
 
 test.describe('GET requests', () => {
     test('GET all brands', async ({ request }) => {
@@ -122,7 +123,7 @@ test.describe('PUT requests', () => {
 });
 
 test.describe('PATCH requests', () => {
-    test.only('PATCH request to update a brand', async ({ request }) => {
+    test('PATCH request to update a brand', async ({ request }) => {
 
         /* Create new brand */
         const brandNumber = randomUUID().slice(0,8);
@@ -169,11 +170,19 @@ test.describe('PATCH requests', () => {
 });
 
 test.describe('DELETE', () => {
- test('DELETE request to remove a brand', async ({ request}) => {
+ test.only('DELETE request to remove a brand', async ({ request}) => {
     const loginAdminResponse = await request.post('https://api.practicesoftwaretesting.com/users/login', {
-        email: users.admin.email,
-        password: users.admin.password
+        data: {
+            email: users.admin.email,
+            password: users.admin.password
+        }
     });
+
+    await expect(loginAdminResponse.status()).toBe(200);
+
+    const loginAdminResponseJson = await loginAdminResponse.json();
+    const accessToken = loginAdminResponseJson.access_token;
+
  });
 });
 

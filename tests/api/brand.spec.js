@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getUniqueName } from '../helpers/brand.js';
+import { randomUUID } from 'node:crypto';
 
 test.describe('GET requests', () => {
     test('GET all brands', async ({ request }) => {
@@ -52,9 +52,10 @@ test.describe('GET requests', () => {
 
 test.describe('POST requests', () => {
     test.only('POST request to create new brand', async ({ request }) => {
+        const brandId = randomUUID().slice(0,8);
         const newBrand = {
-            name: getUniqueName('sams brand'),
-            slug: getUniqueName('sams-brand-')
+            name: `sams brand ${brandId}`,
+            slug: `sams-brand-${brandId}`
         }
 
         const newBrandResponse = await request.post('/brands', {

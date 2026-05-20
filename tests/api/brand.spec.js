@@ -167,3 +167,9 @@ test.describe('PATCH requests', () => {
     });
 });
 
+test.describe('DELETE', () => {
+ test('DELETE request to remove a brand', async ({ request}) => {
+
+ });
+});
+

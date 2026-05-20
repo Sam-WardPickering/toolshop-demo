@@ -56,11 +56,17 @@ test.describe('POST requests', () => {
             slug: "sams-brand"
         }
 
-        const newBrandReponse = await request.post('/brands', {
+        const newBrandResponse = await request.post('/brands', {
             data: newBrand,
         });
 
-        expect(newBrandReponse.status()).toBe(201);
+        expect(newBrandResponse.status()).toBe(201);
+
+        console.log(newBrandResponse);
+
+        expect(newBrandResponse.id).toHaveProperty('id');
+        expect(newBrandResponse.name).toBe(newBrand.name);
+        expect(newBrandResponse.slug).toBe(newBrand.slug);
     });
 });
 

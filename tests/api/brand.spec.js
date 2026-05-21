@@ -82,6 +82,22 @@ test.describe('POST requests', () => {
         expect(newBrandResponseJson.name).toBe(newBrand.name);
         expect(newBrandResponseJson.slug).toBe(newBrand.slug);
     });
+    test('POST request with missing slug field returns an error', async ({ request }) => {
+        const brandId = randomUUID().slice(0,8);
+        const newBrand = {
+            name: `sams brand ${brandId}`,
+        }
+
+        const newBrandResponse = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        const newBrandResponseJson = await newBrandResponse.json();
+
+        expect(newBrandResponse.status()).toBe(422);
+
+        expect(newBrandResponseJson.slug[0]).toBe('The slug field is required.');
+    });
 });
 
 test.describe('PUT requests', () => {

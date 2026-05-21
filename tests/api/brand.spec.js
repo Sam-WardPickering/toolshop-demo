@@ -4,7 +4,7 @@ import { users } from '../test-data/users';
 import { access } from 'node:fs';
 
 test.describe('GET requests', () => {
-    test('GET all brands', async ({ request }) => {
+    test('GET all brands (happy path)', async ({ request }) => {
         const response = await request.get('/brands');
         const responseJson = await response.json();
 
@@ -19,7 +19,7 @@ test.describe('GET requests', () => {
             expect(brand).toHaveProperty('slug');
         }
     });
-    test('GET a specific brand', async ({ request }) => {
+    test('GET a specific brand (happy path)', async ({ request }) => {
        const brands = await request.get('/brands');
        const brandsJson = await brands.json();
 
@@ -34,7 +34,7 @@ test.describe('GET requests', () => {
        expect(responseJson.name).toBe(brand.name);
        expect(responseJson.slug).toBe(brand.slug);
     });
-    test('GET a specific brand by search query', async ({ request }) => {
+    test('GET a specific brand by search query (happy path)', async ({ request }) => {
         const brands = await request.get('/brands');
         const brandsJson = await brands.json();
 
@@ -53,7 +53,7 @@ test.describe('GET requests', () => {
 });
 
 test.describe('POST requests', () => {
-    test('POST request to create new brand', async ({ request }) => {
+    test('POST request to create new brand (happy path)', async ({ request }) => {
         const brandId = randomUUID().slice(0,8);
         const newBrand = {
             name: `sams brand ${brandId}`,
@@ -75,7 +75,7 @@ test.describe('POST requests', () => {
 });
 
 test.describe('PUT requests', () => {
-    test('PUT request to update a brand', async ({ request }) => {
+    test('PUT request to update a brand (happy path)', async ({ request }) => {
 
         /* Create new brand */
         const brandNumber = randomUUID().slice(0,8);
@@ -123,7 +123,7 @@ test.describe('PUT requests', () => {
 });
 
 test.describe('PATCH requests', () => {
-    test('PATCH request to update a brand', async ({ request }) => {
+    test('PATCH request to update a brand (happy path)', async ({ request }) => {
 
         /* Create new brand */
         const brandNumber = randomUUID().slice(0,8);
@@ -170,7 +170,7 @@ test.describe('PATCH requests', () => {
 });
 
 test.describe('DELETE', () => {
- test('DELETE request to remove a brand', async ({ request}) => {
+ test('DELETE request to remove a brand (happy path)', async ({ request}) => {
 
     /* Get access token for deletion */
     const loginAdminResponse = await request.post('https://api.practicesoftwaretesting.com/users/login', {

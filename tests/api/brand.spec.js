@@ -170,7 +170,7 @@ test.describe('PATCH requests', () => {
 });
 
 test.describe('DELETE', () => {
- test.only('DELETE request to remove a brand', async ({ request}) => {
+ test('DELETE request to remove a brand', async ({ request}) => {
 
     /* Get access token for deletion */
     const loginAdminResponse = await request.post('https://api.practicesoftwaretesting.com/users/login', {
@@ -206,6 +206,13 @@ test.describe('DELETE', () => {
             'Authorization': `Bearer ${accessToken}`,
         },
     });
+
+    expect(deletedBrandResponse.status()).toBe(204);
+
+    /* Check brand is deleted */
+    const getBrandResponse = await request.get(`/brands/${newBrandResponseJson.id}`);
+
+    expect(getBrandResponse.status()).toBe(404);
 
  });
 });

@@ -49,7 +49,7 @@ test.describe('GET requests', () => {
         expect(responseJson[0].name).toBe(brand.name);
         expect(responseJson[0].slug).toBe(brand.slug);
     });
-    test.only('GET requests returns a 404 error when using a non-existent id', async ({ request }) => {
+    test('GET requests returns a 404 error when using a non-existent id', async ({ request }) => {
         const falseId = randomUUID().slice(0,8);
 
         const getResponse = await request.get(`brands/${falseId}`);

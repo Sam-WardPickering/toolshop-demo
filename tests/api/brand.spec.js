@@ -120,6 +120,33 @@ test.describe('POST requests', () => {
 
         expect(newBrandResponseJson.name[0]).toBe('The name field is required.');
     });
+
+    test.only('POST request returns an error when creating brand with existing slug', async ({ request }) => {
+        const brandId = randomUUID().slice(0,8);
+        const newBrand = {
+            name: `sams brand ${brandId}`,
+            slug: `sams-brand-${brandId}`
+        };
+
+        const newBrandResponse = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        expect(newBrandResponse.status()).toBe(201);
+
+        const newBrandResponseJson = await newBrandResponse.json();
+
+        /* Attempt to create a brand with existing data */
+        const duplicateBrandRes = await request.post('/brands', {
+            data: newBrand,
+        });
+
+        expect(duplicateBrandRes.status()).toBe(409);
+
+        const duplicateBrandResJson = await duplicateBrandRes.json();
+
+        expect(duplicateBrandResJson.slug[0]).toBe('A brand already exists with this slug.');
+    });
 });
 
 

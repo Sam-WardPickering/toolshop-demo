@@ -121,7 +121,7 @@ test.describe('POST requests', () => {
         expect(newBrandResponseJson.name[0]).toBe('The name field is required.');
     });
 
-    test.only('POST request returns an error when creating brand with existing slug', async ({ request }) => {
+    test('POST request returns an error when creating brand with existing slug', async ({ request }) => {
         const brandId = randomUUID().slice(0,8);
         const newBrand = {
             name: `sams brand ${brandId}`,
@@ -195,6 +195,25 @@ test.describe('PUT requests', () => {
         expect(responseJson.id).toBe(newBrandResponseJson.id);
         expect(responseJson.name).toBe(updatedBrand.name);
         expect(responseJson.slug).toBe(updatedBrand.slug);
+    });
+    test.only('PUT request to non-existent brand returns error', async ({ request }) => {
+        const brandNumber = randomUUID().slice(0,8);
+
+        const brand = {
+            name: `sams brand ${brandNumber}`,
+            slug: `sams-brand-${brandNumber}`
+        };
+
+        const updatedBrandResponse = await request.put(`/brands/${brandNumber}`, {
+            data: brand,
+        });
+
+        expect(updatedBrandResponse.status()).toBe(404);
+
+        const updatedBrandResponseJson = await updatedBrandResponse.json();
+
+        expect(updatedBrandResponseJson.message).toBe('Requested item not found');
+
     });
 });
 

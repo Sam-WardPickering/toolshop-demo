@@ -19,6 +19,7 @@ test.describe('GET requests', () => {
             expect(brand).toHaveProperty('slug');
         }
     });
+
     test('GET a specific brand (happy path)', async ({ request }) => {
        const brands = await request.get('/brands');
        const brandsJson = await brands.json();
@@ -34,6 +35,7 @@ test.describe('GET requests', () => {
        expect(responseJson.name).toBe(brand.name);
        expect(responseJson.slug).toBe(brand.slug);
     });
+
     test('GET a specific brand by search query (happy path)', async ({ request }) => {
         const brands = await request.get('/brands');
         const brandsJson = await brands.json();
@@ -49,6 +51,7 @@ test.describe('GET requests', () => {
         expect(responseJson[0].name).toBe(brand.name);
         expect(responseJson[0].slug).toBe(brand.slug);
     });
+
     test('GET requests returns a 404 error when using a non-existent id', async ({ request }) => {
         const falseId = randomUUID().slice(0,8);
 
@@ -61,6 +64,7 @@ test.describe('GET requests', () => {
         expect(responseJson.message).toBe('Requested item not found');
     });
 });
+
 
 test.describe('POST requests', () => {
     test('POST request to create new brand (happy path)', async ({ request }) => {
@@ -82,6 +86,7 @@ test.describe('POST requests', () => {
         expect(newBrandResponseJson.name).toBe(newBrand.name);
         expect(newBrandResponseJson.slug).toBe(newBrand.slug);
     });
+
     test('POST request with missing slug field returns an error', async ({ request }) => {
         const brandId = randomUUID().slice(0,8);
         const newBrand = {
@@ -98,7 +103,8 @@ test.describe('POST requests', () => {
 
         expect(newBrandResponseJson.slug[0]).toBe('The slug field is required.');
     });
-    test.only('POST request with missing name field returns an error', async ({ request }) => {
+
+    test('POST request with missing name field returns an error', async ({ request }) => {
         const brandId = randomUUID().slice(0,8);
         const newBrand = {
             slug: `sams-brand-${brandId}`,
@@ -112,11 +118,10 @@ test.describe('POST requests', () => {
 
         const newBrandResponseJson = await newBrandResponse.json();
 
-        console.log(newBrandResponseJson);
-
         expect(newBrandResponseJson.name[0]).toBe('The name field is required.');
     });
 });
+
 
 test.describe('PUT requests', () => {
     test('PUT request to update a brand (happy path)', async ({ request }) => {
@@ -166,6 +171,7 @@ test.describe('PUT requests', () => {
     });
 });
 
+
 test.describe('PATCH requests', () => {
     test('PATCH request to update a brand (happy path)', async ({ request }) => {
 
@@ -212,6 +218,7 @@ test.describe('PATCH requests', () => {
         expect(responseJson.slug).toBe(newBrand.slug);
     });
 });
+
 
 test.describe('DELETE', () => {
  test('DELETE request to remove a brand (happy path)', async ({ request}) => {

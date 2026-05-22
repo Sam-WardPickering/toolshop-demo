@@ -92,11 +92,29 @@ test.describe('POST requests', () => {
             data: newBrand,
         });
 
+        expect(newBrandResponse.status()).toBe(422);
+
         const newBrandResponseJson = await newBrandResponse.json();
+
+        expect(newBrandResponseJson.slug[0]).toBe('The slug field is required.');
+    });
+    test.only('POST request with missing name field returns an error', async ({ request }) => {
+        const brandId = randomUUID().slice(0,8);
+        const newBrand = {
+            slug: `sams-brand-${brandId}`,
+        }
+
+        const newBrandResponse = await request.post('/brands', {
+            data: newBrand,
+        });
 
         expect(newBrandResponse.status()).toBe(422);
 
-        expect(newBrandResponseJson.slug[0]).toBe('The slug field is required.');
+        const newBrandResponseJson = await newBrandResponse.json();
+
+        console.log(newBrandResponseJson);
+
+        expect(newBrandResponseJson.name[0]).toBe('The name field is required.');
     });
 });
 

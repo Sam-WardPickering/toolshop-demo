@@ -216,7 +216,7 @@ test.describe('PUT requests', () => {
         expect(updatedBrandResponseJson.message).toBe('Requested item not found');
     });
 
-    test.only('PUT request using an existing slUg returns 409 error', async ({ request }) => {
+    test('PUT request using an existing slUg returns 409 error', async ({ request }) => {
         const brandOneNum = randomUUID().slice(0,8);
         const brandTwoNum = randomUUID().slice(0,8);
 
@@ -247,14 +247,17 @@ test.describe('PUT requests', () => {
         /* Update brand */
 
         const brandTwoUpdateRes = await request.put(`/brands/${brandTwoId}`, {
-            data: brandOne,
+            data: {
+                ...brandTwo,
+                slug: brandOne.slug
+            },    
         });
 
         expect(brandTwoUpdateRes.status()).toBe(409);
 
         const brandTwoUpdateResJson = await brandTwoUpdateRes.json();
 
-        expect(brandTwoUpdateResJson.slug[0]).toBe('A brand already exists with this slug.');
+        expect(brandTwoUpdateResJson.message).toBe('Duplicate Entry');
 
     });
 });

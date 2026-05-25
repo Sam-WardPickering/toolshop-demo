@@ -196,7 +196,8 @@ test.describe('PUT requests', () => {
         expect(responseJson.name).toBe(updatedBrand.name);
         expect(responseJson.slug).toBe(updatedBrand.slug);
     });
-    test.only('PUT request to non-existent brand returns error', async ({ request }) => {
+
+    test('PUT request to non-existent brand returns 404 error', async ({ request }) => {
         const brandNumber = randomUUID().slice(0,8);
 
         const brand = {
@@ -213,6 +214,26 @@ test.describe('PUT requests', () => {
         const updatedBrandResponseJson = await updatedBrandResponse.json();
 
         expect(updatedBrandResponseJson.message).toBe('Requested item not found');
+    });
+
+    test('PUT request using an existing slUg returns 409 error', async ({ request }) => {
+        const brandOneNum = randomUUID().slice(0,8);
+        const brandTwoNum = randomUUID().slice(0,8);
+
+        const brandOne = {
+            name: `brand one ${brandOneNum}`,
+            slug: `brand-one-${brandOneNum}`
+        };
+
+        const brandTwo = {
+            name: `brand two ${brandTwoNum}`,
+            slug: `brand-two-${brandTwoNum}`
+        };
+
+        // const newBrandResponse = await request.post('/brands', {
+        //     data: newBrand,
+        // });
+
 
     });
 });

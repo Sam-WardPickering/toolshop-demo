@@ -230,10 +230,19 @@ test.describe('PUT requests', () => {
             slug: `brand-two-${brandTwoNum}`
         };
 
-        // const newBrandResponse = await request.post('/brands', {
-        //     data: newBrand,
-        // });
+        const brandOneRes = await request.post('/brands', {
+            data: brandOne,
+        });
 
+        expect(brandOneRes.status()).toBe(201);
+
+        const brandTwoRes = await request.post('/brands', {
+            data: brandTwo,
+        });
+
+        expect(brandTwoRes.status()).toBe(201);
+
+        
 
     });
 });

@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { users } from '../test-data/users';
-import { access } from 'node:fs';
 
 test.describe('GET requests', () => {
     test('GET all brands (happy path)', async ({ request }) => {

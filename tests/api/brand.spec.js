@@ -258,7 +258,6 @@ test.describe('PUT requests', () => {
         const brandTwoUpdateResJson = await brandTwoUpdateRes.json();
 
         expect(brandTwoUpdateResJson.message).toBe('Duplicate Entry');
-
     });
 });
 

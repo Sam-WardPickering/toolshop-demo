@@ -216,7 +216,7 @@ test.describe('PUT requests', () => {
         expect(updatedBrandResponseJson.message).toBe('Requested item not found');
     });
 
-    test('PUT request using an existing slUg returns 409 error', async ({ request }) => {
+    test('PUT request using an existing slug returns 409 error', async ({ request }) => {
         const brandOneNum = randomUUID().slice(0,8);
         const brandTwoNum = randomUUID().slice(0,8);
 

@@ -10,16 +10,25 @@ test.describe('POST', () => {
         expect((await newCartResponse.json()).id).toBeDefined();
     });
     test.only('Add item to cart (happy path)', async ({ request }) => {
+        /* Get existing product for id */
+        const products = await (await request.get('/products')).json();
+        expect(products.status()).toBe(200);
+
+        /* Get ID from first product returned */
+        const productId = products.data[0].id;
+
+        /* Create new cart */
         const newCartResponse = await request.post('/carts');
 
         expect(newCartResponse.status()).toBe(201);
 
+        /* Get cart ID & add cart item*/
         const newCartId = await (await newCartResponse.json()).id;
 
         expect(newCartId).toBeDefined();
 
         const cartItem = {
-            'product_id': '01HHJC7RERZ0M3VDGS6X9HM33A',
+            'product_id': productId, 
             'quantity': 1
         };
 
@@ -27,9 +36,9 @@ test.describe('POST', () => {
             data: cartItem,
         });
 
-        // expect(cartItemResponse.status()).toBe(200);
+        expect(cartItemResponse.status()).toBe(200);
 
-        // expect((await cartItemResponse.json()).result).toBe('item added or updated');
+        expect((await cartItemResponse.json()).result).toBe('item added or updated');
     });
 
 });

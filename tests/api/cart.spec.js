@@ -11,11 +11,13 @@ test.describe('POST', () => {
     });
     test.only('Add item to cart (happy path)', async ({ request }) => {
         /* Get existing product for id */
-        const products = await (await request.get('/products')).json();
+        const products = await request.get('/products');
         expect(products.status()).toBe(200);
 
+        const productsJson = await products.json();
+
         /* Get ID from first product returned */
-        const productId = products.data[0].id;
+        const productId = productsJson.data[0].id;
 
         /* Create new cart */
         const newCartResponse = await request.post('/carts');

@@ -67,5 +67,12 @@ test.describe('POST', () => {
             expect(getCartJson.id).toBe(cartId);
         });
     });
+    
+
+    test.describe('PUT', () => {
+        test('Update quantity of cart item', async ({ request }) => {
+
+        });
+    });
 
 });

@@ -70,7 +70,7 @@ test.describe('POST', () => {
 
 
     test.describe('PUT', () => {
-        test.only('Update quantity of cart item', async ({ request }) => {
+        test('Update quantity of cart item', async ({ request }) => {
             /* Get existing product for id */
             const products = await request.get('/products');
             expect(products.status()).toBe(200);

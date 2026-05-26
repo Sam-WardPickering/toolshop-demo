@@ -46,8 +46,14 @@ test.describe('POST', () => {
 
 
     test.describe('GET', () => {
-        test('Get a specific cart', async ({ request }) => {
+        test.only('Get a specific cart (happy path)', async ({ request }) => {
+            const newCart = await request.post('/carts');
 
+            expect(newCart.status()).toBe(201);
+
+            const cartId = (await newCart.json()).id;
+
+            expect(cartId).toBeDefined();
         });
     });
 

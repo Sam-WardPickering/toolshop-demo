@@ -46,7 +46,8 @@ test.describe('POST', () => {
 
 
     test.describe('GET', () => {
-        test.only('Get a specific cart (happy path)', async ({ request }) => {
+        test('Get a specific cart (happy path)', async ({ request }) => {
+            /* Create a cart and store the ID */
             const newCart = await request.post('/carts');
 
             expect(newCart.status()).toBe(201);
@@ -54,6 +55,8 @@ test.describe('POST', () => {
             const cartId = (await newCart.json()).id;
 
             expect(cartId).toBeDefined();
+
+            /* Get the cart using the ID */
 
             const getCart = await request.get(`/carts/${cartId}`);
 

@@ -9,7 +9,8 @@ test.describe('POST', () => {
 
         expect((await newCartResponse.json()).id).toBeDefined();
     });
-    test.only('Add item to cart (happy path)', async ({ request }) => {
+    
+    test('Add item to cart (happy path)', async ({ request }) => {
         /* Get existing product for id */
         const products = await request.get('/products');
         expect(products.status()).toBe(200);

@@ -9,7 +9,7 @@ test.describe('POST', () => {
 
         expect((await newCartResponse.json()).id).toBeDefined();
     });
-    
+
     test('Add item to cart (happy path)', async ({ request }) => {
         /* Get existing product for id */
         const products = await request.get('/products');
@@ -42,6 +42,13 @@ test.describe('POST', () => {
         expect(cartItemResponse.status()).toBe(200);
 
         expect((await cartItemResponse.json()).result).toBe('item added or updated');
+    });
+
+
+    test.describe('GET', () => {
+        test('Get a specific cart', async ({ request }) => {
+
+        });
     });
 
 });

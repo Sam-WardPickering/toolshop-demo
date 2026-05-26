@@ -54,6 +54,14 @@ test.describe('POST', () => {
             const cartId = (await newCart.json()).id;
 
             expect(cartId).toBeDefined();
+
+            const getCart = await request.get(`/carts/${cartId}`);
+
+            expect(getCart.status()).toBe(200);
+
+            const getCartJson = await getCart.json();
+
+            expect(getCartJson.id).toBe(cartId);
         });
     });
 

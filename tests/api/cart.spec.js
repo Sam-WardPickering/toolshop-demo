@@ -136,7 +136,27 @@ test.describe('PUT', () => {
 });
 
 test.describe('DELETE', () => {
-    test('Delete a cart (happy path)', async ({ request }) => {
+    test.only('Delete a cart (happy path)', async ({ request }) => {
+        /* Create a cart & store ID */
+        const newCart = await request.post('/carts');
+
+        expect(newCart.status()).toBe(201);
+
+        const cartId = (await newCart.json()).id;
+
+        expect(cartId).toBeDefined();
+
+        /* Use ID to delete cart */
+        const deleteCart = await request.delete(`/carts/${cartId}`);
+
+        expect(deleteCart.status()).toBe(204);
+
+        /* Confirm cart deletion */
+        const getCart = await request.get(`/carts/${cartId}`);
+
+        expect(getCart.status()).toBe(404);
+
+        expect(await (await getCart.json()).message).toBe('Requested item not found');
 
     });
 });

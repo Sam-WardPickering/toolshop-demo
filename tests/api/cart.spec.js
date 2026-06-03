@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
+import { request } from 'node:http';
 
 test.describe('POST', () => {
     test('Create a new cart (happy path)', async ({ request }) => {
@@ -131,5 +132,11 @@ test.describe('PUT', () => {
         const checkCartItem = await (await checkCart.json()).cart_items[0];
 
         expect(checkCartItem.quantity).toBe(updatedQuantity.quantity);
+    });
+});
+
+test.describe('DELETE', () => {
+    test('Delete a cart (happy path)', async ({ request }) => {
+
     });
 });

@@ -72,7 +72,7 @@ test.describe('GET', () => {
 
 
 test.describe('PUT', () => {
-    test.only('Update quantity of cart item', async ({ request }) => {
+    test('Update quantity of cart item', async ({ request }) => {
         /* Get existing product for id */
         const products = await request.get('/products');
         expect(products.status()).toBe(200);
@@ -126,10 +126,10 @@ test.describe('PUT', () => {
 
         const checkCart = await request.get(`/carts/${newCartId}`);
 
-        await expect(checkCart.status()).toBe(200);
+        expect(checkCart.status()).toBe(200);
 
         const checkCartItem = await (await checkCart.json()).cart_items[0];
 
-        await expect(checkCartItem.quantity).toBe(updatedQuantity.quantity);
+        expect(checkCartItem.quantity).toBe(updatedQuantity.quantity);
     });
 });

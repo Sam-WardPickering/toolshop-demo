@@ -136,7 +136,7 @@ test.describe('PUT', () => {
 });
 
 test.describe('DELETE', () => {
-    test.only('Delete a cart (happy path)', async ({ request }) => {
+    test('Delete a cart (happy path)', async ({ request }) => {
         /* Create a cart & store ID */
         const newCart = await request.post('/carts');
 

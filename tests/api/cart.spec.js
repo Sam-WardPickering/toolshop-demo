@@ -156,7 +156,7 @@ test.describe('DELETE', () => {
 
         expect(getCart.status()).toBe(404);
 
-        expect(await (await getCart.json()).message).toBe('Requested item not found');
+        expect((await getCart.json()).message).toBe('Requested item not found');
 
     });
 });

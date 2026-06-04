@@ -196,8 +196,12 @@ test.describe('DELETE', () => {
         expect(deleteProduct.status()).toBe(204);
 
         /* Confirm product deletion */
+        const checkCart = await request.get(`/carts/${cartId}`);
 
+        expect(checkCart.status()).toBe(200);
 
+        const checkCartItem = await (await checkCart.json()).cart_items[0];
 
+        expect(checkCartItem).toBeUndefined();
     });
 });

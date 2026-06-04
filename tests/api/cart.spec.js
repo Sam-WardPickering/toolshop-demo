@@ -157,6 +157,33 @@ test.describe('DELETE', () => {
         expect(getCart.status()).toBe(404);
 
         expect((await getCart.json()).message).toBe('Requested item not found');
+    });
+
+    test('Delete a cart item (happy path)', async ({ request }) => {
+        /* Create a cart and store ID */
+        const newCart = await request.post('/carts');
+        expect(newCart.status()).toBe(201);
+
+        const cartId = (await newCart.json()).id;
+        expect(cartId).toBeDefined();
+
+        /* Get existing product for id */
+        const products = await request.get('/products');
+        expect(products.status()).toBe(200);
+
+        const productsJson = await products.json();
+
+        /* Get ID from first product returned */
+        const productId = productsJson.data[0].id;
+
+
+        /* Add product to cart */
+
+        /* Delete product */
+
+        /* Confirm product deletion */
+
+
 
     });
 });
